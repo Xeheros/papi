@@ -1,16 +1,15 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
+const router = require('./apiRouter').router;
 
 require('dotenv').config();
 
 const jsonParser = bodyParser.json();
+const urlEncodedParser = bodyParser.urlencoded({ extended: true });
 
-const urlEncodedParser = bodyParser.urlencoded({ extended: false });
-
-app.get('/ranks', jsonParser, ((req, res) => {
-    res.send({ ranks: `Not implemented yet`,});
-}));
+app.use(urlEncodedParser);
+app.use(jsonParser);
 
 app.post('/rank/:id', urlEncodedParser, ((req, res) => {
     const { id } = req.params;
@@ -24,6 +23,8 @@ app.post('/rank/:id', urlEncodedParser, ((req, res) => {
 
     res.send({ score: `Player ${id} has setup a score of ${score}`,});
 }));
+
+app.use('/api/', router);
 
 app.listen(process.env.API_PORT, () =>
 {
