@@ -12,15 +12,12 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       models.UserScore.belongsTo(models.User, {
-        foreignKey: {
-          allowNull: false
-        },
         onDelete: 'CASCADE'
       });
     }
   }
   UserScore.init({
-    idUser: DataTypes.STRING,
+    UserId: DataTypes.INTEGER,
     score: DataTypes.INTEGER
   }, {
     sequelize,
