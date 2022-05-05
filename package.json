@@ -8,6 +8,9 @@
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "mariadb": "^3.0.0",
-    "sequelize": "^6.17.0"
+    "moment": "^2.29.3",
+    "nodemailer": "^6.7.3",
+    "sequelize": "^6.17.0",
+    "sequelize-cli": "^6.4.1"
   }
 }
