@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init({
     deviceId: DataTypes.STRING,
+    username: DataTypes.STRING,
     friendCode: DataTypes.STRING
   }, {
     sequelize,

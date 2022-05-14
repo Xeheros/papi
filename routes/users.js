@@ -41,12 +41,19 @@ module.exports = {
     register: async function(req, res) {
 
         let friendCode = "";
-        const { deviceId, email } = req.body;
+        const { deviceId, username, email } = req.body;
 
         // Check if email already exists
         const user = await models.User.findOne({
             attributes: ['id'],
-            where: { deviceId: deviceId }
+            where: {
+                [models.Sequelize.Op.or]:
+                [
+                    { deviceId},
+                    { username },
+                    { email }
+                ]
+            }
         });
 
         if(user)
@@ -60,6 +67,7 @@ module.exports = {
             email: email,
             friendCode: friendCode,
             deviceId: deviceId,
+            username: username
         });
 
         if(!newUser)
