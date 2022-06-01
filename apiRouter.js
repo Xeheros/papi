@@ -16,6 +16,7 @@ exports.router = (function() {
     router.route('/authenticate').get(tokensController.generate);
 
     // Users
+    router.route('/user/check').get(usersController.check);
     router.route('/user/register').post(usersController.register);
     router.route('/user/login').post(usersController.login);
 

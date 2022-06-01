@@ -112,6 +112,12 @@ module.exports = {
                 'score',
                 [models.Sequelize.literal('RANK() OVER (ORDER BY score DESC)'), 'rank']
             ],
+            include: [
+                {
+                    model: models.User,
+                    attributes: ['username']
+                }
+            ],
             order: [
                 ['score', 'DESC']
             ],

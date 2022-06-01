@@ -38,6 +38,24 @@ async function randomRecoveryCode(pattern = process.env.RECOVERY_CODE_PATTERN, c
 
 // Routes
 module.exports = {
+    check: async function(req, res) {
+        const { username, email } = req.query;
+
+        let user = await models.User.findOne({where: { username: username }});
+
+        if(user)
+            return res.status(409).json({ error: 'Username already taken.' });
+
+        if(email)
+        {
+            user = await models.User.findOne({where: { email: email }});
+
+            if(user)
+                return res.status(409).json({ error: 'Email already taken.' });
+        }
+
+        return res.sendStatus(200);
+    },
     register: async function(req, res) {
 
         let friendCode = "";
@@ -49,7 +67,7 @@ module.exports = {
             where: {
                 [models.Sequelize.Op.or]:
                 [
-                    { deviceId},
+                    { deviceId },
                     { username },
                     { email }
                 ]
@@ -73,7 +91,7 @@ module.exports = {
         if(!newUser)
             return res.status(500).json({ error: "Can't add user."});
 
-        return res.status(201).json({ message: "User created!", userId: newUser.id });
+        return res.status(201).json({ message: "User created!", userId: newUser.id, friendCode: newUser.friendCode });
     },
     login: function(req, res) {
 
