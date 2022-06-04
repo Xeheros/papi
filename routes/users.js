@@ -41,6 +41,9 @@ module.exports = {
     check: async function(req, res) {
         const { username, email } = req.query;
 
+        if(username == null || email == null)
+            return res.sendStatus(400);
+
         let user = await models.User.findOne({where: { username: username }});
 
         if(user)
@@ -60,6 +63,9 @@ module.exports = {
 
         let friendCode = "";
         const { deviceId, username, email } = req.body;
+
+        if(deviceId == null || deviceId === "" || username == null || username === "" || email == null)
+            return res.sendStatus(400);
 
         // Check if email already exists
         const user = await models.User.findOne({
